@@ -22,7 +22,7 @@ app.add_middleware(
 
 app.include_router(blog.router, prefix="/blog", tags=["Blog"])
 app.include_router(calculators.router, prefix="/calculators", tags=["Calculators"])
-app.include_router(contact.router, prefix="/routers/contact", tags=["Contact"])
+app.include_router(contact.router, prefix="/api/routers/contact", tags=["Contact"])
 app.include_router(auth.router, prefix="/auth", tags=["Auth"])
 app.include_router(testimonials.router, prefix="/testimonials", tags=["Testimonials"])
 

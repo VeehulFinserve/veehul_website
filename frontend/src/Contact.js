@@ -4,7 +4,7 @@ import axios from 'axios';
 import './Contact.css';
 import logo from './logo.png';
 
-const API_URL = 'http://localhost:8000/routers/contact/send';
+const API_URL = '/api/routers/contact/send';
 
 const Contact = () => {
   const [isScrolled, setIsScrolled] = useState(false);
