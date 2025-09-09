@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
 import './Contact.css';
 import logo from './logo.png';
+import API from './api';
 
-const API_URL = '/api/routers/contact/send';
+//const API_URL = '/api/contact/send';
+//const API_URL = 'http://localhost:8000/api/contact/send';
+
+console.log("Posting to:", process.env.REACT_APP_API_URL + '/contact/send');
 
 const Contact = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -14,16 +17,16 @@ const Contact = () => {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
-useEffect(() => {
-  window.scrollTo(0, 0);
+  useEffect(() => {
+    window.scrollTo(0, 0);
 
-  const handleScroll = () => {
-    setIsScrolled(window.scrollY > 50);
-  };
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
 
-  window.addEventListener('scroll', handleScroll);
-  return () => window.removeEventListener('scroll', handleScroll);
-}, []);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const handleChange = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
@@ -36,10 +39,11 @@ useEffect(() => {
     setIsLoading(true);
 
     try {
-      await axios.post(API_URL, input);
+      await API.post('/contact/send', input); // 🔥 this expands to http://localhost:8000/api/contact/send in dev
       setSuccess(true);
       setInput({ name: '', email: '', phone: '', subject: '', message: '' });
     } catch (err) {
+      console.error(err);
       setError('Failed to send message. Please try again later.');
     } finally {
       setIsLoading(false);
@@ -76,7 +80,7 @@ useEffect(() => {
               </div>
               <span className="logo-text">Veehul Finserve LLP</span>
             </div>
-            
+
             <nav className={`nav ${isMobileMenuOpen ? 'nav-open' : ''}`}>
               <Link to="/" className="nav-link">Home</Link>
               <Link to="/about" className="nav-link">About</Link>
@@ -88,7 +92,7 @@ useEffect(() => {
               {/* <Link to="/login" className="nav-link login-btn">LOGIN</Link> */}
             </nav>
 
-            <button 
+            <button
               className="mobile-menu-btn"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             >
@@ -100,7 +104,7 @@ useEffect(() => {
         </div>
       </header>
 
-      
+
 
       {/* Main Contact Section */}
       <section className="contact-main">
@@ -304,7 +308,7 @@ useEffect(() => {
                 <h4>Company</h4>
                 <Link to="/about">About Us</Link>
                 <Link to="/contact">Contact</Link>
-               {/*  <Link to="/blog">Blog</Link> */}
+                {/*  <Link to="/blog">Blog</Link> */}
                 <Link to="/faq">FAQ</Link>
               </div>
               <div className="link-group">
